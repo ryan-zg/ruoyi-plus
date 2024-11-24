@@ -1,0 +1,29 @@
+-- 如果表存在则删除
+DROP TABLE IF EXISTS ${tableName};
+
+CREATE TABLE ${tableName} (
+#foreach ($column in $columns)
+    #if($foreach.count == 1)
+    ${column.columnName} ${column.columnType}#if($column.columnLength && $column.columnLength > 0)($column.columnLength)#end #if(!$column.isNull)NOT NULL#end#if($column.isPk) PRIMARY KEY#end#if($column.isIncrement) AUTO_INCREMENT#end#if($column.defaultValue != '') DEFAULT ${column.defaultValue}#end#if($column.columnComment != '') COMMENT '${column.columnComment}'#end
+    #else
+    ,${column.columnName} ${column.columnType}#if($column.columnLength && $column.columnLength > 0)($column.columnLength)#end #if(!$column.isNull)NOT NULL#end#if($column.isPk) PRIMARY KEY#end#if($column.isIncrement) AUTO_INCREMENT#end#if($column.defaultValue != '') DEFAULT ${column.defaultValue}#end#if($column.columnComment != '') COMMENT '${column.columnComment}'#end
+    #end
+#end
+#foreach ($column in $columns)
+#if($column.isFk)
+    ,CONSTRAINT fk_${tableName}_${column.columnName} FOREIGN KEY (${column.columnName}) REFERENCES ${column.fkTableName}(${column.fkColumnName}) #if($column.fkDeleteRule != '')ON DELETE ${column.fkDeleteRule}#end
+#end
+#end
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4#if($tableComment != '') COMMENT='${tableComment}'#end;
+
+#if($indexes && $indexes.size() > 0)
+#foreach($index in $indexes)
+#if($index.columnNames && $index.columnNames.size() > 0)
+#if($index.indexType == 'UNIQUE')
+CREATE UNIQUE INDEX ${index.indexName} ON ${tableName} (#foreach($columnName in $index.columnNames)${columnName}#if($foreach.hasNext), #end#end);
+#else
+CREATE INDEX ${index.indexName} ON ${tableName} (#foreach($columnName in $index.columnNames)${columnName}#if($foreach.hasNext), #end#end);
+#end
+#end
+#end
+#end 
