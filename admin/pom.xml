@@ -58,6 +58,10 @@
             <artifactId>generator</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>manage</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

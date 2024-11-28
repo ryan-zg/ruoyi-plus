@@ -31,11 +31,19 @@
     <jwt.version>0.9.1</jwt.version>
     <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
     <hutool.version>5.8.27</hutool.version>
+    <knife4j.version>4.1.0</knife4j.version>
   </properties>
 
   <!-- 依赖声明 -->
   <dependencyManagement>
     <dependencies>
+      <!-- knife4j 文档-->
+      <dependency>
+        <groupId>com.github.xiaoymin</groupId>
+        <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+        <version>${knife4j.version}</version>
+      </dependency>
+
       <!-- hutool工具-->
       <dependency>
         <groupId>cn.hutool</groupId>
@@ -78,6 +86,20 @@
         <groupId>com.github.pagehelper</groupId>
         <artifactId>pagehelper-spring-boot-starter</artifactId>
         <version>${pagehelper.boot.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <!-- 获取系统信息 -->
@@ -191,6 +213,12 @@
         <version>${common.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>com.ruoyi</groupId>
+        <artifactId>manage</artifactId>
+        <version>${common.version}</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 
@@ -202,6 +230,7 @@
     <module>generator</module>
     <module>quartz</module>
     <module>system</module>
+      <module>manage</module>
   </modules>
   <packaging>pom</packaging>
 

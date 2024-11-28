@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.manage.mapper.CatMapper">
+
+    <resultMap type="Cat" id="CatResult">
+        <result property="id"    column="id"    />
+        <result property="test1"    column="test1"    />
+        <result property="test2"    column="test2"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="isDeleted"    column="is_deleted"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectCatVo">
+        select id, test1, test2, create_time, create_by, update_time, update_by, is_deleted, remark from cat
+    </sql>
+
+    <select id="selectCatList" parameterType="Cat" resultMap="CatResult">
+        <include refid="selectCatVo"/>
+        <where>
+            <if test="test1 != null "> and test1 = #{test1}</if>
+            <if test="test2 != null "> and test2 = #{test2}</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
+        </where>
+    </select>
+
+    <select id="selectCatById" parameterType="Long" resultMap="CatResult">
+        <include refid="selectCatVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCat" parameterType="Cat">
+        insert into cat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="test1 != null">test1,</if>
+            <if test="test2 != null">test2,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="test1 != null">#{test1},</if>
+            <if test="test2 != null">#{test2},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateCat" parameterType="Cat">
+        update cat
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="test1 != null">test1 = #{test1},</if>
+            <if test="test2 != null">test2 = #{test2},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCatById" parameterType="Long">
+        delete from cat where id = #{id}
+    </delete>
+
+    <delete id="deleteCatByIds" parameterType="String">
+        delete from cat where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

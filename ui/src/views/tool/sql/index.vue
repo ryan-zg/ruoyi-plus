@@ -241,6 +241,7 @@ const dataTypeList = [
   { label: 'text', value: 'text' },
   { label: 'datetime', value: 'datetime' },
   { label: 'decimal', value: 'decimal' },
+  { label: 'tinyint', value: 'tinyint'}
   // 可以继续添加其他数据类型
 ]
 
