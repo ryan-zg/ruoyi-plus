@@ -168,65 +168,9 @@ public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${C
     }
 #end
 
-    /**
-     * 新增${functionName}
-     *
-     * @param ${className} ${functionName}对象
-     * @return 结果
-     */
-        #if($table.sub)
-        @Transactional
-        #end
-    @Override
-    public boolean save${ClassName}(${ClassName} ${className}) {
-        // 自动填充创建时间可以通过 MyBatis-Plus 的 MetaObjectHandler 实现
-        boolean result = save(${className});
-        #if($table.sub)
-            if (result) {
-                save${subClassName}List(${className});
-            }
-        #end
-        return result;
-    }
 
-    /**
-     * 修改${functionName}
-     *
-     * @param ${className} ${functionName}对象
-     * @return 结果
-     */
-        #if($table.sub)
-        @Transactional
-        #end
-    @Override
-    public boolean update${ClassName}(${ClassName} ${className}) {
-        // 自动填充更新时间可以通过 MyBatis-Plus 的 MetaObjectHandler 实现
-        boolean result = updateById(${className});
-        #if($table.sub)
-            if (result) {
-                removeSubBy${pkColumn.capJavaField}(${className}.get${pkColumn.capJavaField}());
-                save${subClassName}List(${className});
-            }
-        #end
-        return result;
-    }
 
-    /**
-     * 删除${functionName}
-     *
-     * @param ${pkColumn.javaField}s 主键数组
-     * @return 结果
-     */
-        #if($table.sub)
-        @Transactional
-        #end
-    @Override
-    public boolean removeBy${pkColumn.capJavaField}s(List<${pkColumn.javaType}> ${pkColumn.javaField}s) {
-        #if($table.sub)
-                ${pkColumn.javaField}s.forEach(this::removeSubBy${pkColumn.capJavaField});
-        #end
-        return removeByIds(${pkColumn.javaField}s);
-    }
+
 
     #if($table.sub)
         /**

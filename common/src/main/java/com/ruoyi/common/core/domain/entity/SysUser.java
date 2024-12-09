@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.annotation.Excel.Type;
@@ -26,6 +27,7 @@ public class SysUser extends BaseEntity
 
     /** 用户ID */
     @Excel(name = "用户序号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
+    @TableId
     private Long userId;
 
     /** 部门ID */

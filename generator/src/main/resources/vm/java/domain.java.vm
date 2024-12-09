@@ -3,8 +3,6 @@ package ${packageName}.domain;
 #foreach ($import in $importList)
 import ${import};
 #end
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import lombok.Data;
 import io.swagger.v3.oas.annotations.media.Schema;
